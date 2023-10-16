@@ -1,4 +1,4 @@
-! pip install torch
+!pip install torch
 
 import pandas as pd
 import numpy as np
