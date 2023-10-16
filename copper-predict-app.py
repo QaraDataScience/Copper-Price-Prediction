@@ -30,20 +30,24 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model.to(device)
 
 # Create a Streamlit app
-st.title("Forecasting Copper Prices")
-st.write("This Streamlit app deploys a pre-trained LSTM model for forecasting copper prices.")
+def main():
+    st.title("LSTM Model Deployment")
+    st.write("This Streamlit app deploys a pre-trained LSTM model for prediction.")
 
-# User input
-user_input = st.number_input("Enter a value:", min_value=0.0, max_value=100.0, value=0.0)
+    # User input
+    user_input = st.number_input("Enter a value:", min_value=0.0, max_value=100.0, value=0.0)
 
-# Button to make predictions
-if st.button("Generate Prediction"):
-    # Prepare the input tensor
-    input_data = torch.tensor([[user_input]], dtype=torch.float32).to(device)
+    # Button to make predictions
+    if st.button("Generate Prediction"):
+        # Prepare the input tensor
+        input_data = torch.tensor([[user_input]], dtype=torch.float32).to(device)
 
-    # Make predictions
-    with torch.no_grad():
-        prediction = model(input_data)
+        # Make predictions
+        with torch.no_grad():
+            prediction = model(input_data)
 
-    # Display the prediction
-    st.write(f"Prediction: {prediction.item()}")
+        # Display the prediction
+        st.write(f"Prediction: {prediction.item()}")
+
+if __name__ == "__main__":
+    main()
