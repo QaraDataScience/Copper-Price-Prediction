@@ -25,7 +25,8 @@ class LSTMModel(torch.nn.Module):
         return out
 
 # Load your pre-trained LSTM model from a pickle file
-with open('LSTM.pkl', 'rb') as file:
+model_file_path = 'LSTM.pkl'
+with open(model_file_path, 'rb') as file:
     model = pickle.load(file)
 
 # Set the device (GPU or CPU) based on availability
