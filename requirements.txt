@@ -1,6 +1,7 @@
-pandas
-numpy
+pandas==1.5.3
+numpy==1.23.5
 streamlit
-datetime
-timedelta
-pickle
+cloudpickle==2.2.1
+jsonpickle==3.0.2
+pickleshare==0.7.5
+torch==2.0.1
