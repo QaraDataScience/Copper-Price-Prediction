@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import streamlit as st
-import torch
+
 import pickle
 
 # Define your LSTM model class (replace with your actual model class)
