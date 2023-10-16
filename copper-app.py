@@ -3,7 +3,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import streamlit as st
 import torch
-import pickle
+import pickle5
 
 # Define your LSTM model class (replace with your actual model class)
 class LSTMModel(torch.nn.Module):
@@ -27,7 +27,7 @@ class LSTMModel(torch.nn.Module):
 # Load your pre-trained LSTM model from a pickle file
 model_file_path = 'LSTM.pkl'
 with open(model_file_path, 'rb') as file:
-    model = pickle.load(file)
+    model = pickle5.load(file)
 
 # Set the device (GPU or CPU) based on availability
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
