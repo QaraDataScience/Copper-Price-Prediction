@@ -4,5 +4,5 @@ streamlit
 cloudpickle==2.2.1
 jsonpickle==3.0.2
 pickleshare==0.7.5
-pickle==0.0.0
 torch==2.0.1
+pickle5==0.0.11
