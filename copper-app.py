@@ -2,18 +2,19 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import streamlit as st
+from datetime import date
 import torch
-import pickle5
-
-# Define your LSTM model class (replace with your actual model class)
-class LSTMModel(torch.nn.Module):
+import torch.nn as nn
+class LSTM(nn.Module):
     def __init__(self, input_size, hidden_size, num_stacked_layers):
         super().__init__()
         self.hidden_size = hidden_size
         self.num_stacked_layers = num_stacked_layers
 
-        self.lstm = torch.nn.LSTM(input_size, hidden_size, num_stacked_layers, batch_first=True)
-        self.fc = torch.nn.Linear(hidden_size, 1)
+        self.lstm = nn.LSTM(input_size, hidden_size, num_stacked_layers,
+                            batch_first=True)
+
+        self.fc = nn.Linear(hidden_size, 1)
 
     def forward(self, x):
         batch_size = x.size(0)
@@ -24,10 +25,10 @@ class LSTMModel(torch.nn.Module):
         out = self.fc(out[:, -1, :])
         return out
 
-# Load your pre-trained LSTM model from a pickle file
-model_file_path = 'LSTM.pkl'
-with open(model_file_path, 'rb') as file:
-    model = pickle5.load(file)
+
+
+model_file_path = 'model.pt'
+model = torch.load(model_file_path)
 
 # Set the device (GPU or CPU) based on availability
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -38,8 +39,12 @@ def main():
     st.title("LSTM Model Deployment")
     st.write("This Streamlit app deploys a pre-trained LSTM model for prediction.")
 
-    # User input
-    user_input = st.number_input("Enter a value:", min_value=0.0, max_value=100.0, value=0.0)
+    start_date = st.date_input('Start date:', value=date(2023, 10, 22), key='start_date')
+    end_date = st.date_input('End date:', value=date(2023, 10, 23), key='end_date')
+
+    # Display the date input to the user.
+    st.write('Start date:', start_date)
+    st.write('End date:', end_date)
 
     # Button to make predictions
     if st.button("Generate Prediction"):

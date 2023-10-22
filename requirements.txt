@@ -1,9 +1,9 @@
 Cmake
-pandas==1.5.3
-numpy==1.23.5
+pandas
+numpy
 streamlit
 cloudpickle==2.2.1
 jsonpickle==3.0.2
 pickleshare==0.7.5
-torch==2.0.1
+torch==2.1.0
 pickle5==0.0.11
