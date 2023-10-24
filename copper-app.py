@@ -53,7 +53,9 @@ def main():
     forecast_set = pd.DataFrame({'Date': forecast_dates})
     forecast_set['Date'] = pd.to_datetime(forecast_set['Date'])
     stacked_np = np.load('stacked_np.npy')
-    shifted_df = pd.read_csv('shifted_df.csv', dtype='float64')
+    shifted_df = pd.read_csv('shifted_df.csv')
+    shifted_df = shifted_df.drop(['Date'], axis=1)
+    shifted_df = shifted_df.astype(float)
     
     shifted_df_as_np_flipped = np.fliplr(stacked_np)
     
@@ -62,7 +64,7 @@ def main():
     last = shifted_df_as_tensor[-1][1:]
     last = last.unsqueeze(0).unsqueeze(-1)
     
-    shifted_df_no_date = shifted_df.drop(['Date'], axis=1)
+    shifted_df_no_date = shifted_df.copy()
     
     prices_scaler = joblib.load('min_max_scaler.pkl')
     
