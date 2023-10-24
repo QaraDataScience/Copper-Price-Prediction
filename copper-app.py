@@ -66,7 +66,7 @@ def main():
     
     shifted_df_no_date = shifted_df.copy()
     
-    prices_scaler = joblib.load('min_max_scaler.pkl')
+    prices_scaler = joblib.load('prices_scaler.pkl')
     
     for i in range(forecast_dates.shape[0]):
         last = shifted_df_as_tensor[-1][1:]
