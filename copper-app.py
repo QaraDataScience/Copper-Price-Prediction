@@ -39,7 +39,10 @@ model.to(device)
 def main():
     st.title("LSTM Model Deployment")
     st.write("This Streamlit app deploys a pre-trained LSTM model for prediction.")
-
+    
+    
+    df = pd.read_csv("df.csv")
+    last_date = df['Date'].max().date()
     #start_date = st.date_input('Start date:', value=date(2023, 10, 22), key='start_date')
     end_date = st.date_input('End date:', value=date(2023, 10, 23), key='end_date')
     start_date = last_date+timedelta(days=1)
@@ -59,33 +62,32 @@ def main():
     last = last.unsqueeze(0).unsqueeze(-1)
     
     shifted_df_no_date = shifted_df.drop(['Date'], axis=1)
-    df = pd.read_csv("df.csv")
     
     prices_scaler = joblib.load('min_max_scaler.pkl')
     
     for i in range(forecast_dates.shape[0]):
-        last = shifted_df_as_tensor[-1][1:]
-        last = last.unsqueeze(0).unsqueeze(-1).float()
-        with torch.no_grad():
-            predicted = model(last.to(device)).to('cpu').numpy()
-        row = torch.cat([shifted_df_as_tensor[-1]   [1:],torch.tensor(predicted).reshape(1)],dim=0).unsqueeze(0)
-        quick_reverse = prices_scaler.inverse_transform(row[:,4:].to('cpu').numpy())
-        new_row = {'Price':quick_reverse[0][7],
-                   'Price(t-1)':quick_reverse[0][6],
-                   'Price(t-2)':quick_reverse[0][5],
-                   'Price(t-3)':quick_reverse[0][4],
-                   'Price(t-4)':quick_reverse[0][3],
-                   'Price(t-5)':quick_reverse[0][2],
-                   'Price(t-6)':quick_reverse[0][1],
-                   'Price(t-7)':quick_reverse[0][0],
-                   'Real_GDP':df.iloc[-1]["Real_GDP"],
-                   'CPI':df.iloc[-1]["CPI"],
-                   'inflation_rate':df.iloc[-1]["inflation_rate"],
-                   'PALLFNFINDEXM':df.iloc[-1]["PALLFNFINDEXM"]
-                   }
-        shifted_df_as_tensor = torch.cat((shifted_df_as_tensor, row),dim=0)
-        shifted_df_no_date = shifted_df_no_date._append(new_row,ignore_index=True)
-
+    last = shifted_df_as_tensor[-1][1:]
+    last = last.unsqueeze(0).unsqueeze(-1).float()
+    with torch.no_grad():
+        predicted = model(last.to(device)).to('cpu').numpy()
+    row = torch.cat([shifted_df_as_tensor[-1]   [1:],torch.tensor(predicted).reshape(1)],dim=0).unsqueeze(0)
+    quick_reverse = prices_scaler.inverse_transform(row[:,4:].to('cpu').numpy())
+    new_row = {'Price':quick_reverse[0][7], 
+               'Price(t-1)':quick_reverse[0][6],
+               'Price(t-2)':quick_reverse[0][5],
+               'Price(t-3)':quick_reverse[0][4],
+               'Price(t-4)':quick_reverse[0][3],
+               'Price(t-5)':quick_reverse[0][2],
+               'Price(t-6)':quick_reverse[0][1],
+               'Price(t-7)':quick_reverse[0][0],
+               'Real_GDP':df.iloc[-1]["Real_GDP"],
+               'CPI':df.iloc[-1]["CPI"],
+               'inflation_rate':df.iloc[-1]["inflation_rate"],
+               'PALLFNFINDEXM':df.iloc[-1]["PALLFNFINDEXM"]
+               }
+    shifted_df_as_tensor = torch.cat((shifted_df_as_tensor, row),dim=0)
+    shifted_df_no_date = shifted_df_no_date._append(new_row,ignore_index=True)
+    
     final_set = prices_scaler.inverse_transform(shifted_df_as_tensor[:,4:].to('cpu').numpy())
     display_df = pd.DataFrame(shifted_df_no_date["Price"])
     display_df = display_df.iloc[6049:]
