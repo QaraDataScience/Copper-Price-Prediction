@@ -106,8 +106,7 @@ def main():
     if st.button("Generate Prediction"):
 
 
-        # Display the prediction
-        st.write(f"Prediction: {forecast_set}")
+        st.dataframe(forecast_set)  # Same as st.write(df)
 
 if __name__ == "__main__":
     main()
