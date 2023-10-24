@@ -42,6 +42,7 @@ def main():
     
     
     df = pd.read_csv("df.csv")
+    df["Date"] = pd.to_datetime(df["Date"])
     last_date = df['Date'].max().date()
     #start_date = st.date_input('Start date:', value=date(2023, 10, 22), key='start_date')
     end_date = st.date_input('End date:', value=date(2023, 10, 23), key='end_date')
