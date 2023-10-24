@@ -40,7 +40,8 @@ def main():
     st.title("LSTM Model Deployment")
     st.write("This Streamlit app deploys a pre-trained LSTM model for prediction.")
     
-    
+    image = Image.open('qara_logo.jpg')
+    st.image(image, caption='QARA Data Science',use_column_width=True)
     df = pd.read_csv("df.csv")
     df["Date"] = pd.to_datetime(df["Date"])
     last_date = df['Date'].max().date()
