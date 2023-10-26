@@ -40,8 +40,8 @@ model.to(device)
 def main():
     image = Image.open('qara_logo.jpg')
     st.image(image, caption='QARA Data Science', use_column_width=True)
-    st.title("LSTM Model Deployment")
-    st.write("This Streamlit app deploys a pre-trained LSTM model for prediction.")
+    st.title("Copper AI Forecasting App")
+    st.write("Forecasting of Copper Prices using LSTM Neural Network")
     
 
     df = pd.read_csv("df.csv")
@@ -76,7 +76,7 @@ def main():
         last = last.unsqueeze(0).unsqueeze(-1).float()
         with torch.no_grad():
             predicted = model(last.to(device)).to('cpu').numpy()
-        row = torch.cat([shifted_df_as_tensor[-1]   [1:],torch.tensor(predicted).reshape(1)],dim=0).unsqueeze(0)
+        row = torch.cat([shifted_df_as_tensor[-1][1:],torch.tensor(predicted).reshape(1)],dim=0).unsqueeze(0)
         quick_reverse = prices_scaler.inverse_transform(row[:,4:].to('cpu').numpy())
         new_row = {'Price':quick_reverse[0][7],
                    'Price(t-1)':quick_reverse[0][6],
