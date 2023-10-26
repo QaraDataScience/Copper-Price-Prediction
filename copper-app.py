@@ -38,15 +38,16 @@ model.to(device)
 
 # Create a Streamlit app
 def main():
+    image = Image.open('qara_logo.jpg')
+    st.image(image, caption='QARA Data Science', use_column_width=True)
     st.title("LSTM Model Deployment")
     st.write("This Streamlit app deploys a pre-trained LSTM model for prediction.")
     
-    image = Image.open('qara_logo.jpg')
-    st.image(image, caption='QARA Data Science',use_column_width=True)
+
     df = pd.read_csv("df.csv")
     df["Date"] = pd.to_datetime(df["Date"])
     last_date = df['Date'].max().date()
-    #start_date = st.date_input('Start date:', value=date(2023, 10, 22), key='start_date')
+
     end_date = st.date_input('End date:', value=date(2023, 10, 23), key='end_date')
     start_date = last_date+timedelta(days=1)
     forecast_dates = pd.date_range(start=start_date, end=end_date, freq='D')
