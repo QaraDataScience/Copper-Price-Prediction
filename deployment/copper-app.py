@@ -38,7 +38,7 @@ model.to(device)
 
 # Create a Streamlit app
 def main():
-    image = Image.open('qara_logo.jpg')
+    image = Image.open('qara_logo.png')
     st.image(image, caption='QARA Data Science', use_column_width=True)
     st.title("Copper AI Forecasting App")
     st.write("Forecasting of Copper Prices using LSTM Neural Network")
