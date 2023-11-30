@@ -29,7 +29,7 @@ class LSTM(nn.Module):
 
 
 
-model_file_path = '../Building Model and Forecasting/model.pt'
+model_file_path = 'model.pt'
 model = torch.load(model_file_path)
 
 # Set the device (GPU or CPU) based on availability
@@ -44,7 +44,7 @@ def main():
     st.write("Forecasting of Copper Prices using LSTM Neural Network")
     
 
-    df = pd.read_csv("../DataFrames/final_merged_copper_dataset.csv")
+    df = pd.read_csv("final_merged_copper_dataset.csv")
     df["Date"] = pd.to_datetime(df["Date"])
     last_date = df['Date'].max().date()
 
@@ -56,8 +56,8 @@ def main():
     forecast_set = pd.DataFrame({'Date': forecast_dates})
     forecast_set['Date'] = pd.to_datetime(forecast_set['Date'])
 
-    stacked_np = np.load('../Building Model and Forecasting/stacked_np.npy')
-    shifted_df = pd.read_csv('../Building Model and Forecasting/shifted_df.csv')
+    stacked_np = np.load('stacked_np.npy')
+    shifted_df = pd.read_csv('shifted_df.csv')
     shifted_df = shifted_df.drop(['Date'], axis=1)
     shifted_df = shifted_df.astype(float)
     
@@ -70,7 +70,7 @@ def main():
     
     shifted_df_no_date = shifted_df.copy()
     
-    prices_scaler = joblib.load('../Building Model and Forecasting/prices_scaler.pkl')
+    prices_scaler = joblib.load('prices_scaler.pkl')
 
     for i in range(forecast_dates.shape[0]):
         last = shifted_df_as_tensor[-1][1:]
@@ -115,7 +115,7 @@ def main():
     st.write('Start date:', start_date)
     st.write('End date:', end_date)
 
-    image = Image.open('../Visuals/price_prediction_plot.jpg')
+    image = Image.open('price_prediction_plot.jpg')
     st.image(image, caption='Model Results', use_column_width=True)
     # Button to make predictions
     if st.button("Generate Prediction"):
