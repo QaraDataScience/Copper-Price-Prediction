@@ -38,8 +38,9 @@ model.to(device)
 
 # Create a Streamlit app
 def main():
-    image = Image.open('qara_logo.png')
-    st.image(image, caption='QARA Data Science', use_column_width=True)
+    #image = Image.open('qara_logo.png')
+    #st.image(image, caption='QARA Data Science', use_column_width=True)
+    st.image('qara_logo.png', caption='QARA Data Science', use_column_width=True)
     st.title("Copper AI Forecasting App")
     st.write("Forecasting of Copper Prices using LSTM Neural Network")
     
@@ -115,8 +116,9 @@ def main():
     st.write('Start date:', start_date)
     st.write('End date:', end_date)
 
-    image = Image.open('price_prediction_plot.jpg')
-    st.image(image, caption='Model Results', use_column_width=True)
+    #image = Image.open('price_prediction_plot.jpg')
+    #st.image(image, caption='Model Results', use_column_width=True)
+    st.image('price_prediction_plot.jpg', caption='Model Results', use_column_width=True)
     # Button to make predictions
     if st.button("Generate Prediction"):
 
