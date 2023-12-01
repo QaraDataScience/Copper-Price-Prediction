@@ -43,8 +43,8 @@ def main():
     #st.image('qara_logo.png', caption='QARA Data Science', use_column_width=True)
     st.title("Copper AI Forecasting App")
     st.write("Forecasting of Copper Prices using LSTM Neural Network")
-    
 
+    st.image('price_prediction_plot.jpg', caption='Model Results', use_column_width=True)
     df = pd.read_csv("final_merged_copper_dataset.csv")
     df["Date"] = pd.to_datetime(df["Date"])
     last_date = df['Date'].max().date()
@@ -117,7 +117,7 @@ def main():
     st.write('End date:', end_date)
 
 
-    st.image('price_prediction_plot.jpg', caption='Model Results', use_column_width=True)
+
     # Button to make predictions
     if st.button("Generate Prediction"):
 
