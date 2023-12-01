@@ -6,7 +6,7 @@ import streamlit as st
 from datetime import date
 import torch
 import torch.nn as nn
-#from PIL import Image
+from PIL import Image
 class LSTM(nn.Module):
     def __init__(self, input_size, hidden_size, num_stacked_layers):
         super().__init__()
