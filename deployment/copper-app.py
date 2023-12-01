@@ -6,7 +6,7 @@ import streamlit as st
 from datetime import date
 import torch
 import torch.nn as nn
-#from PIL import Image
+from PIL import Image
 class LSTM(nn.Module):
     def __init__(self, input_size, hidden_size, num_stacked_layers):
         super().__init__()
@@ -38,9 +38,9 @@ model.to(device)
 
 # Create a Streamlit app
 def main():
-    #image = Image.open('qara_logo.png')
-    #st.image(image, caption='QARA Data Science', use_column_width=True)
-    st.image('qara_logo.png', caption='QARA Data Science', use_column_width=True)
+    image = Image.open('qara_logo.png')
+    st.image(image, caption='QARA Data Science', use_column_width=True)
+    #st.image('qara_logo.png', caption='QARA Data Science', use_column_width=True)
     st.title("Copper AI Forecasting App")
     st.write("Forecasting of Copper Prices using LSTM Neural Network")
     
@@ -72,7 +72,7 @@ def main():
     shifted_df_no_date = shifted_df.copy()
     
     prices_scaler = joblib.load('prices_scaler.pkl')
-
+    LOOKBACK = 15
     for i in range(forecast_dates.shape[0]):
         last = shifted_df_as_tensor[-1][1:]
         last = last.unsqueeze(0).unsqueeze(-1).float()
@@ -116,9 +116,9 @@ def main():
     st.write('Start date:', start_date)
     st.write('End date:', end_date)
 
-    #image = Image.open('price_prediction_plot.jpg')
-    #st.image(image, caption='Model Results', use_column_width=True)
-    st.image('price_prediction_plot.jpg', caption='Model Results', use_column_width=True)
+    image = Image.open('price_prediction_plot.jpg')
+    st.image(image, caption='Model Results', use_column_width=True)
+    #st.image('price_prediction_plot.jpg', caption='Model Results', use_column_width=True)
     # Button to make predictions
     if st.button("Generate Prediction"):
 
