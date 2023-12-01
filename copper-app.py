@@ -116,8 +116,7 @@ def main():
     st.write('Start date:', start_date)
     st.write('End date:', end_date)
 
-    #image = Image.open('price_prediction_plot.jpg')
-    st.image(image, caption='Model Results', use_column_width=True)
+
     st.image('price_prediction_plot.jpg', caption='Model Results', use_column_width=True)
     # Button to make predictions
     if st.button("Generate Prediction"):
